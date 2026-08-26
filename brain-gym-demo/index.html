@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brain Gym — Learn by Making</title>
+  <meta name="description" content="Brain Gym is a neighborhood workshop where adults learn practical skills by making real things." />
+  <style>
+    :root {
+      --ink:#191919;
+      --paper:#f4efe6;
+      --card:#fffaf2;
+      --accent:#d3542f;
+      --accent-dark:#9f3418;
+      --muted:#6d675e;
+      --line:#d8cfbf;
+      --yellow:#e8b84a;
+      --green:#486f58;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper);color:var(--ink);line-height:1.5}
+    a{color:inherit}
+    .wrap{width:min(calc(100% - 40px),var(--max));margin:0 auto}
+    nav{position:sticky;top:0;z-index:10;background:rgba(244,239,230,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .nav-inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .brand{font-weight:900;letter-spacing:-.04em;font-size:1.45rem;text-decoration:none}
+    .brand span{color:var(--accent)}
+    .nav-links{display:flex;gap:24px;align-items:center;font-size:.95rem;font-weight:650}
+    .nav-links a{text-decoration:none}
+    .button{display:inline-block;background:var(--accent);color:white;padding:13px 20px;border-radius:8px;text-decoration:none;font-weight:800;border:2px solid var(--accent);transition:.18s ease}
+    .button:hover{transform:translateY(-1px);background:var(--accent-dark);border-color:var(--accent-dark)}
+    .button.secondary{background:transparent;color:var(--ink);border-color:var(--ink)}
+    .hero{padding:88px 0 76px;border-bottom:1px solid var(--line)}
+    .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:center}
+    .eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:.78rem;font-weight:900;color:var(--accent);margin-bottom:18px}
+    h1{font-size:clamp(3.2rem,7vw,6.6rem);line-height:.9;letter-spacing:-.065em;margin:0 0 26px;max-width:840px}
+    .hero p{font-size:1.25rem;max-width:700px;color:#4d4943;margin:0 0 32px}
+    .actions{display:flex;gap:14px;flex-wrap:wrap}
+    .hero-card{background:var(--ink);color:white;padding:32px;border-radius:18px;transform:rotate(1.2deg);box-shadow:0 18px 40px rgba(0,0,0,.12)}
+    .hero-card h2{font-size:2rem;margin:0 0 18px;letter-spacing:-.04em}
+    .hero-card ul{list-style:none;padding:0;margin:0;display:grid;gap:13px}
+    .hero-card li{padding:12px 0;border-bottom:1px solid #444;font-weight:700}
+    .hero-card li:last-child{border:0}
+    section{padding:82px 0;border-bottom:1px solid var(--line)}
+    .section-head{max-width:760px;margin-bottom:42px}
+    .section-head h2{font-size:clamp(2.4rem,5vw,4.4rem);letter-spacing:-.055em;line-height:.98;margin:0 0 18px}
+    .section-head p{font-size:1.13rem;color:var(--muted);margin:0}
+    .three{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
+    .card .num{font-size:.78rem;font-weight:900;color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+    .card h3{font-size:1.45rem;margin:10px 0 10px;letter-spacing:-.03em}
+    .card p{margin:0;color:var(--muted)}
+    .skills{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .skill{background:var(--ink);color:white;min-height:150px;border-radius:12px;padding:20px;display:flex;flex-direction:column;justify-content:flex-end}
+    .skill strong{font-size:1.35rem;letter-spacing:-.03em}
+    .skill span{font-size:.88rem;color:#cfcfcf;margin-top:5px}
+    .projects{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .project{min-height:280px;border-radius:15px;padding:30px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line);background:#efe3ce}
+    .project:nth-child(2){background:#d9e1d4}
+    .project:nth-child(3){background:#ead1c7}
+    .project:nth-child(4){background:#e5dfc8}
+    .project .tag{font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;font-weight:900;margin-bottom:auto}
+    .project h3{font-size:2rem;line-height:1;margin:12px 0 8px;letter-spacing:-.045em}
+    .project p{margin:0;max-width:430px;color:#4f4a43}
+    .membership{background:var(--ink);color:white}
+    .membership .section-head p{color:#c9c9c9}
+    .price-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+    .price{background:#252525;border:1px solid #454545;border-radius:16px;padding:30px}
+    .price.featured{background:var(--accent);border-color:var(--accent)}
+    .price h3{font-size:1.45rem;margin:0}
+    .amount{font-size:4rem;font-weight:950;letter-spacing:-.06em;margin:16px 0 2px}
+    .amount small{font-size:1rem;font-weight:700;letter-spacing:0}
+    .price ul{padding-left:20px;color:#ececec}
+    .price .button{margin-top:12px;background:white;color:var(--ink);border-color:white}
+    .faq{display:grid;grid-template-columns:1fr 1fr;gap:18px 44px}
+    .faq h3{margin:0 0 7px;font-size:1.1rem}
+    .faq p{margin:0;color:var(--muted)}
+    .cta{text-align:center;padding:100px 0}
+    .cta h2{font-size:clamp(2.8rem,6vw,5.5rem);letter-spacing:-.06em;line-height:.95;margin:0 auto 22px;max-width:850px}
+    .cta p{font-size:1.15rem;color:var(--muted);max-width:650px;margin:0 auto 30px}
+    footer{padding:36px 0;color:var(--muted);font-size:.9rem}
+    .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    @media(max-width:850px){
+      .hero-grid,.price-grid{grid-template-columns:1fr}.three{grid-template-columns:1fr}.skills{grid-template-columns:1fr 1fr}.hero{padding-top:56px}.hero-card{transform:none}.nav-links a:not(.button){display:none}
+    }
+    @media(max-width:560px){.skills,.projects,.faq{grid-template-columns:1fr}.wrap{width:min(calc(100% - 28px),var(--max))}section{padding:64px 0}.hero{padding:55px 0}h1{font-size:3.6rem}}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">Brain <span>Gym</span></a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#skills">Skills</a>
+        <a href="#membership">Membership</a>
+        <a class="button" href="#join">Join the interest list</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">A neighborhood workshop for capable humans</div>
+          <h1>Learn to make things. For real.</h1>
+          <p>Brain Gym is a professionally maintained community workshop where adults can learn practical skills, use serious tools, and build things they actually care about.</p>
+          <div class="actions">
+            <a class="button" href="#skills">Explore the workshop</a>
+            <a class="button secondary" href="#how">See how it works</a>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <h2>Come in curious.<br>Leave capable.</h2>
+          <ul>
+            <li>Carpentry & woodworking</li>
+            <li>Electrical & electronics</li>
+            <li>Welding & metalwork</li>
+            <li>Plumbing & repair</li>
+            <li>Making, drawing & fabrication</li>
+          </ul>
+        </aside>
+      </div>
+    </header>
+
+    <section id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Not a class. Not a tool library.</div>
+          <h2>A gym model for practical skills.</h2>
+          <p>You don't join a normal gym because you want one lecture about treadmills. You join because the equipment is there, the space works, and you can keep getting better. Brain Gym applies the same idea to making.</p>
+        </div>
+        <div class="three">
+          <article class="card"><div class="num">01 · Learn</div><h3>Start with a skill</h3><p>Get oriented, learn safe tool use, and complete a first project with support.</p></article>
+          <article class="card"><div class="num">02 · Practice</div><h3>Use the shop</h3><p>Come back to practice, experiment, repair, build, and make the knowledge yours.</p></article>
+          <article class="card"><div class="num">03 · Progress</div><h3>Build capability</h3><p>Move from guided projects to increasingly independent work across connected trades.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Eight ways into the same world</div>
+          <h2>Choose what you want to be able to do.</h2>
+          <p>The workshop is organized around recognizable practical skill areas. Start anywhere; the underlying knowledge connects.</p>
+        </div>
+        <div class="skills">
+          <div class="skill"><strong>Carpenter</strong><span>Wood, structures, joints, finishing</span></div>
+          <div class="skill"><strong>Electrician</strong><span>Circuits, wiring, diagnostics</span></div>
+          <div class="skill"><strong>Welder</strong><span>Metal, joining, fabrication</span></div>
+          <div class="skill"><strong>Mason</strong><span>Concrete, brick, tile, stone</span></div>
+          <div class="skill"><strong>Drawer</strong><span>Plans, sketches, visual thinking</span></div>
+          <div class="skill"><strong>Plumber</strong><span>Pipe, fixtures, water systems</span></div>
+          <div class="skill"><strong>Driver</strong><span>Machines, maintenance, mechanical systems</span></div>
+          <div class="skill"><strong>Leader</strong><span>Planning, safety, teamwork, projects</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Immediate wins</div>
+          <h2>Make something on day one.</h2>
+          <p>Projects are designed to give you a fast success while quietly teaching the fundamentals underneath it.</p>
+        </div>
+        <div class="projects">
+          <article class="project"><div class="tag">Woodworking</div><h3>Build a cutting board</h3><p>Measure, cut, glue, clamp, sand, and finish a useful object you can take home.</p></article>
+          <article class="project"><div class="tag">Electrical</div><h3>Wire a working lamp</h3><p>Learn basic circuits, connections, strain relief, continuity, and safe assembly.</p></article>
+          <article class="project"><div class="tag">Metalworking</div><h3>Weld a steel stool</h3><p>Cut stock, prep joints, tack, weld, grind, square, and finish a simple structure.</p></article>
+          <article class="project"><div class="tag">Repair</div><h3>Fix the thing you own</h3><p>Bring in a real problem and learn a repeatable process for diagnosing what failed.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="membership" class="membership">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Membership</div>
+          <h2>Think YMCA, but for making.</h2>
+          <p>Simple access, maintained equipment, clear safety requirements, and a reason to keep coming back.</p>
+        </div>
+        <div class="price-grid">
+          <article class="price featured">
+            <h3>Founding Member</h3>
+            <div class="amount">$49<small>/month</small></div>
+            <p>Demo pricing for concept testing.</p>
+            <ul><li>Workshop access during open hours</li><li>Core tool orientations</li><li>Member project nights</li><li>Founding-member rate lock</li></ul>
+            <a class="button" href="#join">I'm interested</a>
+          </article>
+          <article class="price">
+            <h3>Try Brain Gym</h3>
+            <div class="amount">$25<small>/visit</small></div>
+            <p>For people who want to see whether this is their thing.</p>
+            <ul><li>Guided first project</li><li>Safety introduction</li><li>Materials for starter build</li><li>Credit toward first membership month</li></ul>
+            <a class="button" href="#join">Try a session</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">Questions people ask</div><h2>Yes, beginners belong here.</h2></div>
+        <div class="faq">
+          <div><h3>Do I need experience?</h3><p>No. The whole point is to create a place where competence can start from zero and grow through practice.</p></div>
+          <div><h3>Is this a makerspace?</h3><p>Sort of. The emphasis is less on access to gadgets and more on learning durable, transferable practical skills.</p></div>
+          <div><h3>Can I work on my own projects?</h3><p>That's the goal. Orientations establish what equipment you can use safely; then you build increasingly independently.</p></div>
+          <div><h3>Is equipment maintained?</h3><p>Yes. Reliable, sharp, calibrated, ready-to-use tools are part of the core value proposition.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="join" class="cta">
+      <div class="wrap">
+        <h2>What would you learn if the shop were already open?</h2>
+        <p>This demo is testing demand for a Brain Gym in the Oak Park area. For now, imagine this button opens an interest form.</p>
+        <a class="button" href="mailto:hello@example.com?subject=Brain%20Gym%20Interest">Join the interest list</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner"><strong>Brain Gym</strong><span>Concept demo · Oak Park, Illinois</span></div>
+  </footer>
+</body>
+</html>
